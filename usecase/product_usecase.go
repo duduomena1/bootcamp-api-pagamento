@@ -20,7 +20,11 @@ func (pu *ProductUseCase) GetProducts() ([]models.Product, error) {
 	return pu.repository.GetProducts()
 }
 
-func (pu *ProductUseCase) InsertProduct(product models.Product) (int, error) {
-
-	return pu.repository.InsertProduct(product)
+func (pu *ProductUseCase) InsertProduct(product models.Product) (models.Product, error) {
+	productId, err := pu.repository.InsertProduct(product)
+	if err != nil {
+		return models.Product{}, err
+	}
+	product.ID = productId
+	return product, nil
 }
