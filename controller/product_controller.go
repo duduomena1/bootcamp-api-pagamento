@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"go-api/models"
 	"go-api/usecase"
 	"net/http"
 )
@@ -27,4 +28,25 @@ func (p *ProductController) GetProducts(c *gin.Context) {
 
 	c.JSON(http.StatusOK, products)
 
+}
+
+func (p *ProductController) InsertProduct(c *gin.Context) {
+	var product models.Product
+	err := c.BindJSON(&product)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	insertedProduct, err := p.productUseCase.InsertProduct(product)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusCreated, insertedProduct)
 }
