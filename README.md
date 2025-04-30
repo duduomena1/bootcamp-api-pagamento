@@ -38,5 +38,5 @@ PostgreSQL database for data persistence. The API allows CRUD operations (Create
 - [ ] Implement product update functionality (PUT endpoint).
 - [ ] Implement product deletion functionality (DELETE endpoint).
 - [ ] Add unit tests for repositories and controllers.
-- [ ] Create detailed API documentation using Swagger.
+- [x] Create detailed API documentation using Swagger.
 - [ ] Set up CI/CD for the project.
