@@ -28,3 +28,11 @@ func (pu *ProductUseCase) InsertProduct(product models.Product) (models.Product,
 	product.ID = productId
 	return product, nil
 }
+
+func (pu *ProductUseCase) GetProductById(id int) (*models.Product, error) {
+	product, err := pu.repository.GetProductById(id)
+	if err != nil {
+		return nil, err
+	}
+	return product, nil
+}
