@@ -5,6 +5,7 @@ import (
 	"go-api/models"
 	"go-api/usecase"
 	"net/http"
+	"strconv"
 )
 
 type ProductController struct {
@@ -49,4 +50,36 @@ func (p *ProductController) InsertProduct(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, insertedProduct)
+}
+
+func (p *ProductController) GetProductsByID(c *gin.Context) {
+	id := c.Param("id")
+	if id == "" {
+		response := models.Response{
+			Message: "ID is required",
+		}
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	Id, err := strconv.Atoi(id)
+	if err != nil {
+		response := models.Response{
+			Message: "ID must be a number",
+		}
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	product, err := p.productUseCase.GetProductById(Id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+	if product == nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"Message": "Product not found",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, product)
+
 }
