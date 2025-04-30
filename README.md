@@ -32,7 +32,7 @@ PostgreSQL database for data persistence. The API allows CRUD operations (Create
        dbname   = "bootcamp_db"
    )
     ```
-3. ## To-Do List
+## To-Do List
 - [ ] Add input validation in controllers.
 - [ ] Create .env file for environment variables.
 - [ ] Implement product update functionality (PUT endpoint).
